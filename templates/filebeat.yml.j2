@@ -89,6 +89,7 @@ filebeat.config.inputs:
 
 
 filebeat.config.modules:
+  enabled: "{{ filebeat_modules_enabled }}"
   # Glob pattern for configuration loading
   path: ${path.config}/modules.d/*.yml
 
@@ -138,7 +139,7 @@ name: "{{ filebeat_node_name }}"
 #setup.dashboards.url:
 
 
-#============================== Kibana =====================================a Фм 
+#============================== Kibana =====================================a Фм
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
 setup.kibana:
