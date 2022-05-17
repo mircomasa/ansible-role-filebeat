@@ -12,6 +12,7 @@ filebeat_node_name: '{{ inventory_hostname }}'
 filebeat_ssl_enabled: false
 filebeat_inputs: []
 filebeat_inputs_type: type
+filebeat_modules: []
 filebeat_modules_enabled: true
 
 fb_home: '{{ default["fb_home"] }}'
