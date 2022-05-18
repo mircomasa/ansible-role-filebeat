@@ -181,10 +181,10 @@ output.{{ filebeat_output }}:
 
 
 {% if filebeat_output == "elasticsearch" %}
-  hosts: ["{{ elasticsearch.host }}"]
-  port: {{ elasticsearch.port }}
+  hosts: [ "{{ filebeat_elasticsearch_output.hosts }}" ]
+  port: {{ filebeat_elasticsearch_output.port }}
 {% elif filebeat_output == "logstash" %}
-  hosts: ["{{ logstash.host }}:{{ logstash.port }}"]
+  hosts: [ {% for filebeat_logstash_output in filebeat_logstash_outputs %}{% if loop.index > 1 %} , {% endif %}"{{ filebeat_logstash_output.host }}:{{ filebeat_logstash_output.port }}"{% endfor %} ]
 {% endif %}
   bulk_max_size: {{ filebeat_bulk_max_size }}
   worker: {{ filebeat_worker }}

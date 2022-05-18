@@ -95,25 +95,25 @@ path:
 Temp directory for Windows to download and upzip Filebeat package. Default value is `'{{ ansible_env.TEMP }}/filebeat'` (ansible_env.TEMP value solves idempotence issue)
 
 
-- `input_logpath` 
-Path to log files. 
+- `input_logpath`
+Path to log files.
 
 Default value for *NIX OS family is `"/var/log/*.log"`
 
 Default value for WIN OS family is `'c:\windows\*.log'`
 
-Variable `filebeat_inputs` defines type of logs that will be processed by pipeline, their log paths and Elasticsearch index that should store this type of logs. 
+Variable `filebeat_inputs` defines type of logs that will be processed by pipeline, their log paths and Elasticsearch index that should store this type of logs.
 You can specify several inputs with various paths, logtypes and index names using yaml format like in example below:
 ```
     filebeat_inputs:
       - name: hybris
-        paths: 
+        paths:
           - '/var/log/console*.log'
         fields:
           logtype: hybris
           index_name: hybris-console
       - name: access
-        paths: 
+        paths:
           - '/var/log/access*.log'
           - '/var/log/nginx_access*.log'
         fields:
@@ -127,17 +127,14 @@ You can specify several inputs with various paths, logtypes and index names usin
 Is used to configure what output to use when sending data (`elasticsearch` or `logstash`). Default value is `elasticsearch`
 
 
-- `elasticsearch.host`
+- `filebeat_elasticsearch_output.hosts`
 Array of hosts to connect to. Default value is `localhost`
-- `elasticsearch.port`
+- `filebeat_elasticsearch_output.port`
 Value for setting custom port. Default value is `9200`
 
 
-- `logstash.host`
-Array of hosts to connect to. Default value is `localhost`
-- `logstash.port`
-Value for setting custom port. Default value is `5044`
-
+- `filebeat_logstash_outputs`
+Array of hosts and ports to connect to. Default value is `localhost:5044`
 
 ## Advanced config parameters:
 
@@ -199,8 +196,9 @@ Example Playbook
     - role: ansible-role-filebeat
   vars:
     input_logpath: "/var/log/messages"
-    elasticsearch:
-      host: elasticsearch.example.com
+    filebeat_elasticsearch_output:
+      hosts:
+        - elasticsearch.example.com
       port: 9200
 ```
 

@@ -31,13 +31,14 @@ input_logpath: '{{ default_logpath }}'
 #output customization:
 filebeat_output: elasticsearch
 
-elasticsearch:
-  host: localhost
+filebeat_elasticsearch_output:
+  hosts:
+    - localhost
   port: 9200
 
-logstash:
-  host: localhost
-  port: 5044
+filebeat_logstash_outputs:
+  - host: localhost
+    port: 5044
 
 filebeat_service_name: filebeat
 filebeat_bulk_max_size: 500
