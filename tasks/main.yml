@@ -39,9 +39,4 @@
     - not-supported.yml
   loop_control:
     loop_var: platform_tasks
-    
-- name: "Enable Filebeat modules"
-  ansible.builtin.shell: "filebeat modules enable {{ item }}"
-  loop: "{{ filebeat_modules }}"
-  notify: Restart filebeat
-  become: yes
+

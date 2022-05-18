@@ -60,12 +60,6 @@
   loop_control:
     loop_var: fb_input
   notify: Restart filebeat win
-  vars:
-    path_config: 'C:\\program files\Filebeat'
-    filebeat_inputs_type: type
-    filebeat_ignore_older: 0
-    filebeat_scan_frequency: 15s
-    filebeat_harvester_buffer_size: 65535
 
 - name: Install nssm
   win_chocolatey:
@@ -89,3 +83,9 @@
   win_service:
     name: '{{ filebeat_service_name }}'
     state: started
+    
+- name: "Enable Filebeat modules"
+  win_shell: '{{ path_config }}\filebeat.exe modules enable {{ item }}'
+    chdir: '{{ path.home }}'
+  loop: "{{ filebeat_modules }}"
+  notify: Restart filebeat

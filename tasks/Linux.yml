@@ -52,4 +52,10 @@
         name: filebeat
         state: started
         enabled: true
+        
+    - name: "Enable Filebeat modules"
+      ansible.builtin.shell: "filebeat modules enable {{ item }}"
+      loop: "{{ filebeat_modules }}"
+      notify: Restart filebeat
+
   become: true
