@@ -8,3 +8,7 @@
   ignore_older: {{ filebeat_ignore_older }}
   scan_frequency: {{ filebeat_scan_frequency }}
   harvester_buffer_size: {{ filebeat_harvester_buffer_size }}
+  
+{% if fb_input.exclude_files is defined %}
+  prospector.scanner.exclude_files: {{ fb_input.exclude_files }}
+{% endif %}
