@@ -1,4 +1,5 @@
 ---
+
 - name: Set Filebeat version if defined
   set_fact:
     fb_package_name: '{{ fb_package_name }}={{ filebeat_version }}'
@@ -12,23 +13,13 @@
       register: debian_dependency
       until: debian_dependency is succeeded
 
-    - name: Add elasticsearch apt key
-      apt_key:
-        url: '{{ elastic_gpg_key }}'
-        state: present
-      register: add_gpg_key
-      until: add_gpg_key is succeeded
-
-    - name: Add Beats repository
-      apt_repository:
-        repo: '{{ es_apt_url }}'
-        state: present
-        update_cache: true
+    - import_tasks: Debian-apt-repository.yml 
 
     - name: Install filebeat
       apt:
         name: '{{ fb_package_name }}'
         state: present
+      update_cache: yes
       register: installed_package
       until: installed_package is succeeded
       notify: '{{ fb_service_handlers }}'
@@ -37,4 +28,5 @@
       file:
         path: /usr/lib/systemd/system
         state: directory
+  
   become: true

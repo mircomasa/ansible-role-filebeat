@@ -1,0 +1,21 @@
+---
+
+- name: Remove elasticsearch apt key (Temporary task)
+  apt_key:
+    url: '{{ elastic_gpg_key }}'
+    state: absent
+
+- name:  Ubuntu - Add Docker apt repository key
+  ansible.builtin.get_url:
+    url: '{{ elastic_gpg_key }}'
+    dest: /etc/apt/trusted.gpg.d/elasticsearch.asc
+    mode: '0644'
+    force: true
+  register: add_gpg_key
+  until: add_gpg_key is succeeded
+
+- name: Add Beats repository
+  apt_repository:
+    repo: '{{ es_apt_url }}'
+    state: present
+    filename: 'artifacts_elastic_co_packages_apt'
