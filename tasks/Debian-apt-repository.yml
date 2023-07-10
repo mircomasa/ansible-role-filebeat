@@ -5,7 +5,7 @@
     url: '{{ elastic_gpg_key }}'
     state: absent
 
-- name:  Ubuntu - Add Docker apt repository key
+- name:  Ubuntu - Add Elasticsearch apt repository key
   ansible.builtin.get_url:
     url: '{{ elastic_gpg_key }}'
     dest: /etc/apt/trusted.gpg.d/elasticsearch.asc
@@ -14,7 +14,7 @@
   register: add_gpg_key
   until: add_gpg_key is succeeded
 
-- name: Add Beats repository
+- name: Add Elasticsearch repository
   apt_repository:
     repo: '{{ es_apt_url }}'
     state: present
