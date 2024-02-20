@@ -86,6 +86,7 @@
     
 - name: "Enable Filebeat modules"
   win_shell: '{{ path_config }}\filebeat.exe modules enable {{ item }}'
+  args:
     chdir: '{{ path.home }}'
   loop: "{{ filebeat_modules }}"
   notify: Restart filebeat
