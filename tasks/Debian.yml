@@ -19,7 +19,7 @@
       apt:
         name: '{{ fb_package_name }}'
         state: present
-      update_cache: yes
+        update_cache: yes
       register: installed_package
       until: installed_package is succeeded
       notify: '{{ fb_service_handlers }}'
